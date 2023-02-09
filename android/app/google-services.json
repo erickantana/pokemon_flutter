@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "137600164108",
+    "project_id": "pokemon-f3521",
+    "storage_bucket": "pokemon-f3521.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137600164108:android:abaa9df007238a37b2e929",
+        "android_client_info": {
+          "package_name": "com.example.pokemon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137600164108-f1nq576a8j2nuoegvbtqrsgu7ci2f355.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_eui3sni25YghwE0x3FJj14opjZxws18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137600164108-f1nq576a8j2nuoegvbtqrsgu7ci2f355.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "137600164108-t6k2qc9jjt0p8ct0h8b6hkmid864npt1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pokemon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
