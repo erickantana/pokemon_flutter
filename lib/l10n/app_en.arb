@@ -1,0 +1,25 @@
+{
+    "email": "Email",
+    "password": "Password",
+    "emailAddress": "Email Address",
+    "signIn": "Sign In",
+    "register": "Register",
+    "emptyField": "{field} cannot be empty.",
+    "@emptyField": {
+        "description": "Empty error message on specified field name",
+        "placeholders": {
+            "field": {
+                "type": "String",
+                "example": "Email"
+            }
+        }
+    },
+    "userNotFound": "User not found.",
+    "wrongPassword": "Incorrect password.",
+    "authenticationFailure": "Unable to authenticate",
+    "weakPassword": "The password provided is too weak.",
+    "emailAlreadyInUse": "The account already exists for that email.",
+    "registrationFailure": "Unable to register",
+    "authenticating": "Authenticating",
+    "registering": "Registering"
+}

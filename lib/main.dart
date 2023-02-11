@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import './routes.dart';
 import 'firebase_options.dart';
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
               return AuthCubit(user);
             },
             child: MaterialApp.router(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
               routerConfig: routes,
             ),
           );

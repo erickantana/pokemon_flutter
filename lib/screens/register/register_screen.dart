@@ -9,23 +9,22 @@ import '../../widgets/alert_dialog/information_dialog.dart';
 import '../../widgets/alert_dialog/loading_dialog.dart';
 import '../../widgets/outlined_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(32),
-      width: double.infinity,
       color: Colors.white,
+      padding: const EdgeInsets.all(32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -42,26 +41,22 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: context.locale.password,
           ),
           const Padding(padding: EdgeInsets.only(top: 16)),
-          InkWell(
-            onTap: () => context.go("/register"),
-            child: Text(context.locale.register, style: const TextStyle(color: Colors.blue)),
-          ),
           ElevatedButton(
-            onPressed: login,
-            child: Text(context.locale.signIn),
+            onPressed: register,
+            child: Text(context.locale.register),
           ),
         ],
       ),
     );
   }
 
-  void login() {
+  void register() {
     showDialog<DialogResult<User?>>(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return LoadingDialog<User?>(
-          message: "${context.locale.authenticating}...",
+          message: "${context.locale.registering}...",
           futureAction: () async {
             try {
               final email = emailController.text;
@@ -70,17 +65,17 @@ class _LoginScreenState extends State<LoginScreen> {
               if (email.isEmpty) return DialogResult.failed(message: context.locale.emptyField("Email"));
               if (password.isEmpty) return DialogResult.failed(message: context.locale.emptyField("Password"));
 
-              final user = await context.read<AuthCubit>().login(email, password);
+              final user = await context.read<AuthCubit>().register(email, password);
               return DialogResult.success(futureResult: user);
             } catch (error) {
               if (error is FirebaseAuthException) {
-                if (error.code == 'user-not-found') {
-                  return DialogResult.failed(message: context.locale.userNotFound);
-                } else if (error.code == 'wrong-password') {
-                  return DialogResult.failed(message: context.locale.wrongPassword);
+                if (error.code == 'weak-password') {
+                  return DialogResult.failed(message: context.locale.weakPassword);
+                } else if (error.code == 'email-already-in-use') {
+                  return DialogResult.failed(message: context.locale.emailAlreadyInUse);
                 }
               }
-              return DialogResult.failed(message: context.locale.authenticationFailure);
+              return DialogResult.failed(message: context.locale.registrationFailure);
             }
           },
         );

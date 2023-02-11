@@ -44,5 +44,8 @@ class DialogResult<T> {
 
   bool get isFailed => !isSuccess;
 
-  DialogResult({required this.isSuccess, required this.message, this.futureResult});
+  DialogResult({required this.isSuccess, this.message = "", this.futureResult});
+
+  DialogResult.success({this.message = "", this.futureResult}) : isSuccess = true;
+  DialogResult.failed({required this.message, this.futureResult}) : isSuccess = false;
 }

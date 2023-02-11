@@ -1,0 +1,25 @@
+{
+    "email": "Email",
+    "password": "Kata Sandi",
+    "emailAddress": "Alamat Email",
+    "signIn": "Masuk",
+    "register": "Daftar",
+    "emptyField": "{field} tidak dapat dikosongkan.",
+    "@emptyField": {
+        "description": "Empty error message on specified field name",
+        "placeholders": {
+            "field": {
+                "type": "String",
+                "example": "Email"
+            }
+        }
+    },
+    "userNotFound": "User tidak dapat ditemukan.",
+    "wrongPassword": "Kata sandi salah.",
+    "authenticationFailure": "Tidak dapat mengautentikasi.",
+    "weakPassword": "Kata sandi yang diberikan terlalu lemah.",
+    "emailAlreadyInUse": "Akun pada email yang diberikan sudah digunakan.",
+    "registrationFailure": "Gagal melakukan registrasi akun.",
+    "authenticating": "Autentikasi",
+    "registering": "Registrasi"
+}
