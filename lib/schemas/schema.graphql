@@ -1,0 +1,65 @@
+type Query {
+  pokemons(limit: Int!, offset: Int!): PaginatedPokemon
+}
+
+type PaginatedPokemon {
+  count: Int!
+  next: String
+  previous: String
+  nextOffset: Int
+  prevOffset: Int
+  status: Boolean
+  message: String
+  results: [Pokemon]
+}
+
+type Pokemon {
+  url: String
+  name: String
+  image: String
+}
+
+type PokemonDetail {
+  id: Int
+  name: String
+  sprites: Sprites
+  moves: [Moves]
+  types: [Types]
+}
+
+type Sprites {
+  front_default: String
+}
+
+type Moves {
+  move: Move
+}
+
+type Move {
+  name: String
+}
+
+type Types {
+  type: Type
+}
+
+type Type {
+  name: String
+}
+
+query pokemons($limit: Int, $offset: Int) {
+  pokemons(limit: $limit, offset: $offset) {
+    count
+    next
+    previous
+    nextOffset
+    prevOffset
+    status
+    message
+    results {
+      url
+      name
+      image
+    }
+  }
+}

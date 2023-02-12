@@ -17,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(text: "test1@gmail.com");
+  final passwordController = TextEditingController(text: "123456");
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const Padding(padding: EdgeInsets.only(top: 16)),
           InkWell(
-            onTap: () => context.go("/register"),
+            onTap: () => context.push("/register"),
             child: Text(context.locale.register, style: const TextStyle(color: Colors.blue)),
           ),
           ElevatedButton(
@@ -78,6 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   return DialogResult.failed(message: context.locale.userNotFound);
                 } else if (error.code == 'wrong-password') {
                   return DialogResult.failed(message: context.locale.wrongPassword);
+                } else {
+                  return DialogResult.failed(message: "Firebase Auth Failure: $error");
                 }
               }
               return DialogResult.failed(message: context.locale.authenticationFailure);

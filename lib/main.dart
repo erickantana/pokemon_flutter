@@ -4,15 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import './routes.dart';
 import 'firebase_options.dart';
+import 'podo/pokemon.dart';
 import 'state_management/auth_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await initHiveForFlutter();
+  Hive.initFlutter();
+  Hive.registerAdapter(PokemonAdapter());
+
   runApp(const MyApp());
 }
 
