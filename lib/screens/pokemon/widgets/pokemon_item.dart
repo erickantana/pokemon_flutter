@@ -1,32 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:palette_generator/palette_generator.dart';
 
+import '../../../extensions/string_extensions.dart';
 import '../../../podo/pokemon.dart';
 
 class PokemonItem extends StatelessWidget {
   final Pokemon pokemon;
   const PokemonItem({Key? key, required this.pokemon}) : super(key: key);
 
+  Future<PaletteGenerator?> generatePalette(String? image) async {
+    if (image == null) return null;
+
+    return await PaletteGenerator.fromImageProvider(NetworkImage(image));
+  }
+
   @override
   Widget build(BuildContext context) {
     final image = pokemon.image;
-    final name = pokemon.name ?? "";
+    final name = pokemon.name;
     final url = pokemon.url ?? "";
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          if (image != null)
-            Image.network(
-              image,
-              height: 128,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(alignment: Alignment.center, height: 128, child: const Text("Unable to fetch image"));
-              },
-            )
-          else
-            Container(alignment: Alignment.center, height: 128, child: const Text("No Image Available")),
-          Text(name),
-        ],
+    return FutureBuilder(
+      future: generatePalette(image),
+      builder: (context, snapshot) {
+        return PokemonCard(name: name, image: image, paletteGenerator: snapshot.data);
+      },
+    );
+  }
+}
+
+class PokemonCard extends StatelessWidget {
+  final String? name;
+  final String? image;
+  final PaletteGenerator? paletteGenerator;
+  const PokemonCard({
+    Key? key,
+    this.paletteGenerator,
+    required this.name,
+    this.image,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final pokemonImage = image;
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: InkWell(
+        onTap: () => context.go("/pokemon/$name"),
+        child: Container(
+          decoration: BoxDecoration(
+            color: paletteGenerator?.dominantColor?.color,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            children: [
+              if (pokemonImage != null)
+                Image.network(
+                  pokemonImage,
+                  height: 92,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(alignment: Alignment.center, height: 92, child: const Text("Unable to fetch image"));
+                  },
+                )
+              else
+                Container(alignment: Alignment.center, height: 92, child: const Text("No Image Available")),
+              Text(
+                name.capitalized,
+                style: TextStyle(
+                  color: paletteGenerator?.dominantColor?.bodyTextColor,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

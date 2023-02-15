@@ -1,43 +1,43 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pokemon.dart';
+part of 'evolution_chain.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PokemonAdapter extends TypeAdapter<Pokemon> {
+class EvolutionChainAdapter extends TypeAdapter<EvolutionChain> {
   @override
-  final int typeId = 6;
+  final int typeId = 1;
 
   @override
-  Pokemon read(BinaryReader reader) {
+  EvolutionChain read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Pokemon()
+    return EvolutionChain()
       ..id = fields[0] as int?
-      ..name = fields[1] as String?
-      ..url = fields[2] as String?
-      ..image = fields[3] as String?
-      ..evolutionChain = fields[4] as EvolutionChain?;
+      ..evolutionDetail = (fields[1] as List?)?.cast<EvolutionDetail>()
+      ..evolveTo = (fields[2] as List?)?.cast<EvolutionChain>()
+      ..speciesName = fields[3] as String?
+      ..speciesUrl = fields[4] as String?;
   }
 
   @override
-  void write(BinaryWriter writer, Pokemon obj) {
+  void write(BinaryWriter writer, EvolutionChain obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.evolutionDetail)
       ..writeByte(2)
-      ..write(obj.url)
+      ..write(obj.evolveTo)
       ..writeByte(3)
-      ..write(obj.image)
+      ..write(obj.speciesName)
       ..writeByte(4)
-      ..write(obj.evolutionChain);
+      ..write(obj.speciesUrl);
   }
 
   @override
@@ -46,7 +46,7 @@ class PokemonAdapter extends TypeAdapter<Pokemon> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PokemonAdapter &&
+      other is EvolutionChainAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

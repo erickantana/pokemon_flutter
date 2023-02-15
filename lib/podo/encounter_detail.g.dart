@@ -1,43 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pokemon.dart';
+part of 'encounter_detail.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PokemonAdapter extends TypeAdapter<Pokemon> {
+class EncounterDetailAdapter extends TypeAdapter<EncounterDetail> {
   @override
-  final int typeId = 6;
+  final int typeId = 11;
 
   @override
-  Pokemon read(BinaryReader reader) {
+  EncounterDetail read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Pokemon()
-      ..id = fields[0] as int?
-      ..name = fields[1] as String?
-      ..url = fields[2] as String?
-      ..image = fields[3] as String?
-      ..evolutionChain = fields[4] as EvolutionChain?;
+    return EncounterDetail(
+      chance: fields[0] as int?,
+      conditions: (fields[4] as List?)?.cast<String>(),
+      maxLevel: fields[1] as int?,
+      method: fields[3] as String?,
+      minLevel: fields[2] as int?,
+    );
   }
 
   @override
-  void write(BinaryWriter writer, Pokemon obj) {
+  void write(BinaryWriter writer, EncounterDetail obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.chance)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.maxLevel)
       ..writeByte(2)
-      ..write(obj.url)
+      ..write(obj.minLevel)
       ..writeByte(3)
-      ..write(obj.image)
+      ..write(obj.method)
       ..writeByte(4)
-      ..write(obj.evolutionChain);
+      ..write(obj.conditions);
   }
 
   @override
@@ -46,7 +47,7 @@ class PokemonAdapter extends TypeAdapter<Pokemon> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PokemonAdapter &&
+      other is EncounterDetailAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

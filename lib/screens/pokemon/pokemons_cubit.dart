@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../data_sources/data_source.dart';
-import '../podo/pokemon.dart';
-import '../repositories/pokemon_repository.dart';
-import '../schemas/schema.graphql.dart';
+import '../../data_sources/data_source.dart';
+import '../../podo/pokemon.dart';
+import '../../repositories/pokemon_repository.dart';
+import '../../schemas/schema.graphql.dart';
 
 class PokemonsState {
   Map<int, Pokemon> pokemons = {};
@@ -30,6 +30,7 @@ class PokemonsCubit extends Cubit<PokemonsState> {
         final pokemons = {
           for (var i = 0; i < results.length; i++)
             i + offset: Pokemon()
+              ..id = results[i]?.id
               ..image = results[i]?.image
               ..name = results[i]?.name
               ..url = results[i]?.url,

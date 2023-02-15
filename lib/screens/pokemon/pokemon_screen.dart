@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../state_management/pokemons_cubit.dart';
+import 'pokemons_cubit.dart';
 import 'widgets/pokemon_item.dart';
 
 class PokemonScreen extends StatefulWidget {
@@ -39,7 +39,12 @@ class _PokemonScreenState extends State<PokemonScreen> {
     dev.log("Pokemon@count: ${pokemons.length + 1}");
     return Stack(
       children: [
-        ListView.builder(
+        GridView.builder(
+          padding: const EdgeInsets.all(8),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 0.9,
+          ),
           controller: _scrollController,
           itemCount: min(pokemons.length + 1, count ?? pokemons.length + 1),
           itemBuilder: (context, index) {

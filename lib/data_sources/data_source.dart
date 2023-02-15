@@ -16,4 +16,11 @@ class DataSource {
     final queryResult = await _client.query(options);
     return queryResult.parsedData?.pokemons;
   }
+
+  static Future<Query$pokemon$pokemon?> fetchPokemon(String name) async {
+    final variables = Variables$Query$pokemon(name: name);
+    final options = Options$Query$pokemon(variables: variables);
+    final queryResult = await _client.query(options);
+    return queryResult.parsedData?.pokemon;
+  }
 }
