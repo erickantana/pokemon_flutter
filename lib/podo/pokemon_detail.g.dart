@@ -20,22 +20,21 @@ class PokemonDetailAdapter extends TypeAdapter<PokemonDetail> {
       id: fields[0] as int?,
       name: fields[1] as String?,
       sprites: fields[2] as Sprite?,
-      evolutionChainUrl: fields[3] as String?,
-      encounters: (fields[4] as List?)?.cast<Encounter?>(),
-      height: fields[5] as int?,
-      weight: fields[6] as int?,
-      speciesUrl: fields[7] as String?,
-      stats: (fields[8] as List?)?.cast<Stat?>(),
-      moves: (fields[9] as List?)?.cast<Move?>(),
-      abilities: (fields[10] as List?)?.cast<Ability?>(),
-      pokemonTypes: (fields[11] as List?)?.cast<PokemonType?>(),
+      encounters: (fields[3] as List?)?.cast<Encounter?>(),
+      height: fields[4] as int?,
+      weight: fields[5] as int?,
+      speciesUrl: fields[6] as String?,
+      stats: (fields[7] as List?)?.cast<Stat?>(),
+      moves: (fields[8] as List?)?.cast<Move?>(),
+      abilities: (fields[9] as List?)?.cast<Ability?>(),
+      pokemonTypes: (fields[10] as List?)?.cast<PokemonType?>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, PokemonDetail obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -43,22 +42,20 @@ class PokemonDetailAdapter extends TypeAdapter<PokemonDetail> {
       ..writeByte(2)
       ..write(obj.sprites)
       ..writeByte(3)
-      ..write(obj.evolutionChainUrl)
-      ..writeByte(4)
       ..write(obj.encounters)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.height)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.weight)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.speciesUrl)
-      ..writeByte(8)
+      ..writeByte(7)
       ..write(obj.stats)
-      ..writeByte(9)
+      ..writeByte(8)
       ..write(obj.moves)
-      ..writeByte(10)
+      ..writeByte(9)
       ..write(obj.abilities)
-      ..writeByte(11)
+      ..writeByte(10)
       ..write(obj.pokemonTypes);
   }
 

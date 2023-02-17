@@ -23,30 +23,27 @@ class PokemonDetail extends HiveObject {
   Sprite? sprites;
 
   @HiveField(3)
-  String? evolutionChainUrl;
-
-  @HiveField(4)
   List<Encounter?>? encounters;
 
-  @HiveField(5)
+  @HiveField(4)
   int? height;
 
-  @HiveField(6)
+  @HiveField(5)
   int? weight;
 
-  @HiveField(7)
+  @HiveField(6)
   String? speciesUrl;
 
-  @HiveField(8)
+  @HiveField(7)
   List<Stat?>? stats;
 
-  @HiveField(9)
+  @HiveField(8)
   List<Move?>? moves;
 
-  @HiveField(10)
+  @HiveField(9)
   List<Ability?>? abilities;
 
-  @HiveField(11)
+  @HiveField(10)
   List<PokemonType?>? pokemonTypes;
 
   @override
@@ -55,7 +52,6 @@ class PokemonDetail extends HiveObject {
       "id": id,
       "name": name,
       "sprites": sprites.toString(),
-      "evolutionChainUrl": evolutionChainUrl,
       "encounters": encounters.toString(),
       "height": height,
       "weight": weight,
@@ -70,7 +66,6 @@ class PokemonDetail extends HiveObject {
     this.id,
     this.name,
     this.sprites,
-    this.evolutionChainUrl,
     this.encounters,
     this.height,
     this.weight,
@@ -83,20 +78,17 @@ class PokemonDetail extends HiveObject {
 
   static PokemonDetail? fromQueryResult({
     Query$pokemon$pokemon? queryResult,
-    String? evolutionChainUrl,
     List<Encounter?>? encounters,
-    String? speciesUrl,
   }) {
     if (queryResult == null) return null;
     return PokemonDetail(
       id: queryResult.id,
       name: queryResult.name,
       sprites: Sprite.fromQueryResult(queryResult.sprites),
-      evolutionChainUrl: evolutionChainUrl,
       encounters: encounters,
       height: queryResult.height,
       weight: queryResult.weight,
-      speciesUrl: speciesUrl,
+      speciesUrl: queryResult.species?.url,
       stats: queryResult.stats?.map((e) => Stat.fromQueryResult(e)).toList(),
       moves: queryResult.moves?.map((e) => Move.fromQueryResult(e)).toList(),
       abilities: queryResult.abilities?.map((e) => Ability.fromQueryResult(e)).toList(),

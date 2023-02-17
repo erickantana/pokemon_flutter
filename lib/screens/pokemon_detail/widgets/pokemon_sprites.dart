@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../podo/sprite.dart';
-import '../../pokemon/pokemon_cubit.dart';
+import '../pokemon_cubit.dart';
 
 class PokemonSprites extends StatelessWidget {
   const PokemonSprites({Key? key}) : super(key: key);

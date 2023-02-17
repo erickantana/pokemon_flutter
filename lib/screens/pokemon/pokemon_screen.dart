@@ -43,7 +43,7 @@ class _PokemonScreenState extends State<PokemonScreen> {
           padding: const EdgeInsets.all(8),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
-            childAspectRatio: 0.9,
+            childAspectRatio: 0.8,
           ),
           controller: _scrollController,
           itemCount: min(pokemons.length + 1, count ?? pokemons.length + 1),

@@ -16,12 +16,13 @@ class EvolutionChainAdapter extends TypeAdapter<EvolutionChain> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return EvolutionChain()
-      ..id = fields[0] as int?
-      ..evolutionDetail = (fields[1] as List?)?.cast<EvolutionDetail>()
-      ..evolveTo = (fields[2] as List?)?.cast<EvolutionChain>()
-      ..speciesName = fields[3] as String?
-      ..speciesUrl = fields[4] as String?;
+    return EvolutionChain(
+      evolutionDetail: (fields[1] as List?)?.cast<EvolutionDetail?>(),
+      evolveTo: (fields[2] as List?)?.cast<EvolutionChain?>(),
+      id: fields[0] as int?,
+      speciesName: fields[3] as String?,
+      speciesUrl: fields[4] as String?,
+    );
   }
 
   @override

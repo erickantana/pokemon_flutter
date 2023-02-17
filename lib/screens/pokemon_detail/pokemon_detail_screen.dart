@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../extensions/string_extensions.dart';
-import '../../podo/encounter.dart';
 import '../../podo/pokemon_type.dart';
 import '../../widgets/key_value_pair.dart';
-import '../pokemon/pokemon_cubit.dart';
-import 'widgets/pokemon_encounter_dialog.dart';
-import 'widgets/pokemon_moves_dialog.dart';
+import 'pokemon_cubit.dart';
+import 'pokemon_evolution_cubit.dart';
+import 'widgets/pokemon_abilities.dart';
+import 'widgets/pokemon_encounters.dart';
+import 'widgets/pokemon_evolution.dart';
+import 'widgets/pokemon_moves.dart';
+import 'widgets/pokemon_species.dart';
 import 'widgets/pokemon_sprites.dart';
 import 'widgets/pokemon_stats.dart';
 
@@ -29,8 +32,11 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final pokemonState = context.select<PokemonCubit, PokemonState>((value) => value.state);
+    final image = context.select<PokemonCubit, String?>((value) => value.image);
     final pokemonDetail = pokemonState.pokemonDetail;
+    final evolutionChains = context.select<PokemonCubit, List<EvolutionMap>>((value) => value.evolutionChains);
 
+    context.read<PokemonCubit>().evolutionChains;
     if (pokemonDetail == null) {
       return Container(
         padding: const EdgeInsets.all(16),
@@ -55,19 +61,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
       );
     }
 
-    final pokemonSprite = pokemonDetail.sprites?.frontDefault ??
-        pokemonDetail.sprites?.backDefault ??
-        pokemonDetail.sprites?.backFemale ??
-        pokemonDetail.sprites?.backShiny ??
-        pokemonDetail.sprites?.backShinyFemale ??
-        pokemonDetail.sprites?.frontDefault ??
-        pokemonDetail.sprites?.frontFemale ??
-        pokemonDetail.sprites?.frontShiny ??
-        pokemonDetail.sprites?.frontShinyFemale;
     final stats = pokemonDetail.stats;
-    final encounters = pokemonDetail.encounters;
-    final moves = pokemonDetail.moves;
-    final abilities = pokemonDetail.abilities;
     return Container(
       color: pokemonState.paletteGenerator?.dominantColor?.color ?? Colors.white,
       child: Column(
@@ -105,7 +99,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            pokemonDetail.name.capitalized,
+                            "${pokemonDetail.name.capitalized} #${pokemonDetail.id}",
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 22,
@@ -151,7 +145,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                             ),
                           ),
                         const Padding(padding: EdgeInsets.only(left: 32)),
-                        if (pokemonSprite != null)
+                        if (image != null)
                           Container(
                             height: 128,
                             width: 128,
@@ -161,7 +155,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                               borderRadius: BorderRadius.all(Radius.circular(64)),
                               color: Colors.white,
                             ),
-                            child: Image.network(pokemonSprite),
+                            child: Image.network(image),
                           )
                         else
                           Container(
@@ -198,117 +192,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       ],
                     ),
                     const PokemonSprites(),
-                    if (encounters != null && encounters.isNotEmpty) ...[
+                    const PokemonEncounters(),
+                    const PokemonMoves(),
+                    const PokemonAbilities(),
+                    if (evolutionChains.isNotEmpty) ...[
                       const Padding(padding: EdgeInsets.only(top: 16)),
                       Text(
-                        "Location Encounters",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                          color: pokemonState.paletteGenerator?.dominantColor?.bodyTextColor,
-                        ),
-                      ),
-                      for (final encounter in encounters.take(5))
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Material(
-                            clipBehavior: Clip.hardEdge,
-                            borderRadius: BorderRadius.circular(4),
-                            child: InkWell(
-                              onTap: () => context.push("/location-detail", extra: encounter),
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(8),
-                                child: Text(encounter?.location?.name.unhypenated.capitalized ?? ""),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (encounters.length > 5) ...[
-                        const Padding(padding: EdgeInsets.only(top: 8)),
-                        InkWell(
-                          onTap: () {
-                            showDialog<Encounter>(
-                              context: context,
-                              builder: (context) {
-                                return PokemonEncountersDialog(
-                                  encounters: encounters,
-                                  color: pokemonState.paletteGenerator?.dominantColor?.color,
-                                );
-                              },
-                            ).then((encounter) {
-                              Future.delayed(const Duration(milliseconds: 200), () {
-                                if (encounter != null && mounted) context.push("/location-detail", extra: encounter);
-                              });
-                            });
-                          },
-                          child: Text(
-                            "See more...",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              color: pokemonState.paletteGenerator?.dominantColor?.bodyTextColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (moves != null && moves.isNotEmpty) ...[
-                      const Padding(padding: EdgeInsets.only(top: 16)),
-                      Text(
-                        "Moves",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 18,
-                            color: pokemonState.paletteGenerator?.dominantColor?.bodyTextColor),
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 8)),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          for (final move in moves.take(10))
-                            Container(
-                              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(16)),
-                              ),
-                              child: Text(move?.name.unhypenated.capitalized ?? ""),
-                            ),
-                        ],
-                      ),
-                      if (moves.length > 10) ...[
-                        const Padding(padding: EdgeInsets.only(top: 8)),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return PokemonMovesDialog(
-                                  moves: moves,
-                                  color: pokemonState.paletteGenerator?.dominantColor?.color,
-                                );
-                              },
-                            );
-                          },
-                          child: Text(
-                            "See more...",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              color: pokemonState.paletteGenerator?.dominantColor?.bodyTextColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (abilities != null && abilities.isNotEmpty) ...[
-                      const Padding(padding: EdgeInsets.only(top: 16)),
-                      Text(
-                        "Abilities",
+                        "Evolutions",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
@@ -316,23 +206,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                           color: pokemonState.paletteGenerator?.dominantColor?.bodyTextColor,
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 8)),
-                      Wrap(
-                        runSpacing: 8,
-                        spacing: 8,
-                        children: [
-                          for (final ability in abilities)
-                            Container(
-                              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(16)),
-                              ),
-                              child: Text(ability?.name.unhypenated.capitalized ?? ""),
-                            ),
-                        ],
-                      )
+                      for (final evolutionChain in evolutionChains)
+                        BlocProvider(
+                          create: (context) => PokemonEvolutionCubit(evolutionChain),
+                          child: const PokemonEvolution(),
+                        ),
                     ],
+                    const PokemonSpecies(),
                   ],
                 ),
               ),

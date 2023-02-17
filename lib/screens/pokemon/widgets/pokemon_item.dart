@@ -23,18 +23,20 @@ class PokemonItem extends StatelessWidget {
     return FutureBuilder(
       future: generatePalette(image),
       builder: (context, snapshot) {
-        return PokemonCard(name: name, image: image, paletteGenerator: snapshot.data);
+        return PokemonCard(name: name, image: image, paletteGenerator: snapshot.data, id: pokemon.id);
       },
     );
   }
 }
 
 class PokemonCard extends StatelessWidget {
+  final int? id;
   final String? name;
   final String? image;
   final PaletteGenerator? paletteGenerator;
   const PokemonCard({
     Key? key,
+    this.id,
     this.paletteGenerator,
     required this.name,
     this.image,
@@ -52,8 +54,18 @@ class PokemonCard extends StatelessWidget {
             color: paletteGenerator?.dominantColor?.color,
             borderRadius: BorderRadius.circular(8),
           ),
+          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "#$id",
+                  style: TextStyle(
+                    color: paletteGenerator?.dominantColor?.bodyTextColor,
+                  ),
+                ),
+              ),
               if (pokemonImage != null)
                 Image.network(
                   pokemonImage,

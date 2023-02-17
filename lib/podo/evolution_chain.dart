@@ -11,10 +11,10 @@ class EvolutionChain {
   int? id;
 
   @HiveField(1)
-  List<EvolutionDetail>? evolutionDetail;
+  List<EvolutionDetail?>? evolutionDetail;
 
   @HiveField(2)
-  List<EvolutionChain>? evolveTo;
+  List<EvolutionChain?>? evolveTo;
 
   @HiveField(3)
   String? speciesName;
@@ -31,5 +31,23 @@ class EvolutionChain {
       "speciesName": speciesName,
       "speciesUrl": speciesUrl,
     }.toString();
+  }
+
+  EvolutionChain({
+    this.evolutionDetail,
+    this.evolveTo,
+    this.id,
+    this.speciesName,
+    this.speciesUrl,
+  });
+
+  static EvolutionChain? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+
+    return EvolutionChain(id: json["id"], speciesName: json["species"]?["name"], speciesUrl: json["species"]?["url"], evolveTo: [
+      for (final evolveTo in json["evolves_to"] as List<dynamic>) EvolutionChain.fromJson(evolveTo),
+    ], evolutionDetail: [
+      for (final evolutionDetail in json["evolution_details"]) EvolutionDetail.fromJson(evolutionDetail),
+    ]);
   }
 }
