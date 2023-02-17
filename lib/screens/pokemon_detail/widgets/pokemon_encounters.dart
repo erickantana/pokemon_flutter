@@ -14,20 +14,23 @@ class PokemonEncounters extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.select<PokemonCubit, PokemonState>((value) => value.state);
     final encounters = state.pokemonDetail?.encounters;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (encounters != null && encounters.isNotEmpty) ...[
-          const Padding(padding: EdgeInsets.only(top: 16)),
-          Text(
-            "Location Encounters",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              fontStyle: FontStyle.italic,
-              color: state.paletteGenerator?.dominantColor?.bodyTextColor,
-            ),
-          ),
+
+    if (encounters == null || encounters.isEmpty) {
+      return Container(
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.center,
+        child: const Text(
+          "No Encounters Available",
+          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           for (final encounter in encounters.take(5))
             Padding(
               padding: const EdgeInsets.only(top: 8),
@@ -72,8 +75,8 @@ class PokemonEncounters extends StatelessWidget {
               ),
             ),
           ],
-        ]
-      ],
+        ]),
+      ),
     );
   }
 }

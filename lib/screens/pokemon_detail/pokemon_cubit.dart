@@ -62,7 +62,9 @@ class PokemonCubit extends Cubit<PokemonState> {
     final species = await SpeciesRepository.getSpecies(pokemonDetail?.speciesUrl);
     final evolutionChain = await EvolutionChainRepository.getEvolutionChain(species?.evolutionChainUrl);
     final paletteGenerator = await getColor(pokemonDetail);
-    emit(PokemonState(pokemonDetail: pokemonDetail, evolutionChain: evolutionChain, paletteGenerator: paletteGenerator, species: species));
+    if (!isClosed) {
+      emit(PokemonState(pokemonDetail: pokemonDetail, evolutionChain: evolutionChain, paletteGenerator: paletteGenerator, species: species));
+    }
   }
 
   Future<PaletteGenerator?> getColor(PokemonDetail? pokemonDetail) async {

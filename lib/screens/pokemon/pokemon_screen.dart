@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
+import '../../podo/pokemon.dart';
 import 'pokemons_cubit.dart';
 import 'widgets/pokemon_item.dart';
 
@@ -13,8 +14,6 @@ class PokemonScreen extends StatefulWidget {
 }
 
 class _PokemonScreenState extends State<PokemonScreen> {
-  static const limit = 10;
-
   final LinkedScrollControllerGroup _linkedScrollControllerGroup = LinkedScrollControllerGroup();
   late ScrollController _scrollController;
   late ScrollController _scrollController2;
@@ -44,58 +43,13 @@ class _PokemonScreenState extends State<PokemonScreen> {
         Row(
           children: [
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemBuilder: (context, index) {
-                  if (index < firstList.length) {
-                    return PokemonItem(pokemon: firstList.elementAt(index));
-                  } else {
-                    context.read<PokemonsCubit>().fetchPokemon(limit);
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(16),
-                      child: Container(),
-                    );
-                  }
-                },
-              ),
+              child: PokemonListView(controller: _scrollController, pokemons: firstList),
             ),
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController2,
-                itemBuilder: (context, index) {
-                  if (index < secondList.length) {
-                    return PokemonItem(pokemon: secondList.elementAt(index));
-                  } else {
-                    context.read<PokemonsCubit>().fetchPokemon(limit);
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(16),
-                      child: Container(),
-                    );
-                  }
-                },
-              ),
+              child: PokemonListView(controller: _scrollController2, pokemons: secondList),
             ),
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController3,
-                itemBuilder: (context, index) {
-                  if (index < thirdList.length) {
-                    return PokemonItem(pokemon: thirdList.elementAt(index));
-                  } else {
-                    context.read<PokemonsCubit>().fetchPokemon(limit);
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(16),
-                      child: Container(),
-                    );
-                  }
-                },
-              ),
+              child: PokemonListView(controller: _scrollController3, pokemons: thirdList),
             ),
           ],
         ),
@@ -120,18 +74,31 @@ class _PokemonScreenState extends State<PokemonScreen> {
   }
 }
 
-class Tile extends StatelessWidget {
-  final String text;
-  const Tile({Key? key, required this.text}) : super(key: key);
+class PokemonListView extends StatelessWidget {
+  final Iterable<Pokemon> pokemons;
+  final ScrollController controller;
+  const PokemonListView({Key? key, required this.pokemons, required this.controller}) : super(key: key);
+
+  static const limit = 10;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 4, left: 4, right: 4),
-      height: 128,
-      color: Colors.grey,
-      alignment: Alignment.center,
-      child: Text(text),
+    return ListView.builder(
+      itemCount: pokemons.length + 1,
+      controller: controller,
+      itemBuilder: (context, index) {
+        if (index < pokemons.length) {
+          return PokemonItem(pokemon: pokemons.elementAt(index));
+        } else {
+          context.read<PokemonsCubit>().fetchPokemon(limit);
+          return Container(
+            alignment: Alignment.center,
+            color: Colors.white,
+            padding: const EdgeInsets.all(16),
+            child: Container(),
+          );
+        }
+      },
     );
   }
 }

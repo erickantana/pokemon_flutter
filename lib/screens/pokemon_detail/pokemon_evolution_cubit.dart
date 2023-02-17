@@ -59,6 +59,6 @@ class PokemonEvolutionCubit extends Cubit<EvolutionState?> {
       final pokemon = await PokemonDetailRepository.getPokemonDetail(variety);
       if (pokemon != null) toPokemons.add(pokemon);
     }
-    emit(EvolutionState(fromPokemons: fromPokemons, toPokemons: toPokemons, evolutionDetails: evolutionMap.evolutionDetail));
+    if (!isClosed) emit(EvolutionState(fromPokemons: fromPokemons, toPokemons: toPokemons, evolutionDetails: evolutionMap.evolutionDetail));
   }
 }
