@@ -64,6 +64,7 @@ class PokemonCard extends StatelessWidget {
                   style: TextStyle(
                     color: paletteGenerator?.dominantColor?.bodyTextColor,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               if (pokemonImage != null)
@@ -81,6 +82,7 @@ class PokemonCard extends StatelessWidget {
                 style: TextStyle(
                   color: paletteGenerator?.dominantColor?.bodyTextColor,
                 ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),

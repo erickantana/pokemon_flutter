@@ -51,6 +51,7 @@ dependencies:
   http: ^0.13.5
   palette_generator: ^0.3.3+2
   collection: ^1.16.0
+  linked_scroll_controller: ^0.2.0
 
 dev_dependencies:
   flutter_test:

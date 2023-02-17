@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +15,6 @@ class DataSource {
   static final GraphQLClient _client = GraphQLClient(link: _httpLink, cache: GraphQLCache(store: HiveStore()));
 
   static Future<Query$pokemons$pokemons?> fetchPokemons({required int limit, required int offset}) async {
-    log("Pokemon@Fetch Pokemon@remote: (limit: $limit, offset: $offset)");
     final variables = Variables$Query$pokemons(limit: limit, offset: offset);
     final options = Options$Query$pokemons(variables: variables);
     final queryResult = await _client.query(options);
