@@ -12,6 +12,8 @@ class PokemonMoves extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.select<PokemonCubit, PokemonState>((value) => value.state);
     final moves = state.pokemonDetail?.moves;
+    final dominantColor = state.paletteGenerator?.dominantColor;
+    final primaryColor = dominantColor?.color;
 
     if (moves == null || moves.isEmpty) {
       return Container(
@@ -39,11 +41,14 @@ class PokemonMoves extends StatelessWidget {
                 for (final move in moves.take(10))
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
                     ),
-                    child: Text(move?.name.unhypenated.capitalized ?? ""),
+                    child: Text(
+                      move?.name.unhypenated.capitalized ?? "",
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
               ],
             ),
@@ -61,13 +66,9 @@ class PokemonMoves extends StatelessWidget {
                     },
                   );
                 },
-                child: Text(
+                child: const Text(
                   "See more...",
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    color: state.paletteGenerator?.dominantColor?.bodyTextColor,
-                  ),
+                  style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

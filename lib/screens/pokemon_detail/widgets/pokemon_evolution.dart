@@ -30,7 +30,6 @@ class _PokemonEvolutionState extends State<PokemonEvolution> {
       margin: const EdgeInsets.only(top: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

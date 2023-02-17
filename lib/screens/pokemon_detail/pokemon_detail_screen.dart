@@ -149,10 +149,10 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
           const Padding(padding: EdgeInsets.only(top: 8)),
           Expanded(
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow(color: Color.fromARGB(255, 70, 70, 70), spreadRadius: 2, blurRadius: 12)],
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                boxShadow: const [BoxShadow(color: Color.fromARGB(255, 70, 70, 70), spreadRadius: 2, blurRadius: 12)],
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
               ),
               child: Column(
                 children: [

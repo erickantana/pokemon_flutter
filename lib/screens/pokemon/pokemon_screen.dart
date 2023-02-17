@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import '../../podo/pokemon.dart';
+import '../../state_management/prefs_cubit.dart';
 import 'pokemons_cubit.dart';
 import 'widgets/pokemon_item.dart';
 
@@ -34,40 +35,69 @@ class _PokemonScreenState extends State<PokemonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select<PokemonsCubit, PokemonsState>((value) => value.state);
-    final firstList = state.firstList.values;
-    final secondList = state.secondList.values;
-    final thirdList = state.thirdList.values;
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: PokemonListView(controller: _scrollController, pokemons: firstList),
-            ),
-            Expanded(
-              child: PokemonListView(controller: _scrollController2, pokemons: secondList),
-            ),
-            Expanded(
-              child: PokemonListView(controller: _scrollController3, pokemons: thirdList),
-            ),
-          ],
+        StreamBuilder(
+          stream: context.read<PrefsCubit>().stream,
+          builder: (context, snapshot) {
+            return Row(
+              children: [
+                Switch(
+                  value: snapshot.data?.darkMode ?? false,
+                  onChanged: (bool? value) {
+                    if (value != null) {
+                      context.read<PrefsCubit>().setDarkMode(value);
+                    }
+                  },
+                ),
+                const Text("Use Dark Theme", style: TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            );
+          },
         ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                _scrollController.animateTo(
-                  _scrollController.position.maxScrollExtent,
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.fastOutSlowIn,
-                );
-              },
-              child: const Icon(Icons.arrow_downward),
-            ),
-          ),
+        BlocSelector<PokemonsCubit, PokemonsState, PokemonsState>(
+          selector: (state) => state,
+          builder: (context, state) {
+            final firstList = state.firstList.values;
+            final secondList = state.secondList.values;
+            final thirdList = state.thirdList.values;
+            return Expanded(
+              child: Stack(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PokemonListView(controller: _scrollController, pokemons: firstList),
+                      ),
+                      Expanded(
+                        child: PokemonListView(controller: _scrollController2, pokemons: secondList),
+                      ),
+                      Expanded(
+                        child: PokemonListView(controller: _scrollController3, pokemons: thirdList),
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.fastOutSlowIn,
+                          );
+                        },
+                        child: const Icon(Icons.arrow_downward),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ],
     );

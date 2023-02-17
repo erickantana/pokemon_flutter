@@ -11,6 +11,8 @@ class PokemonAbilities extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.select<PokemonCubit, PokemonState>((value) => value.state);
     final abilities = state.pokemonDetail?.abilities;
+    final dominantColor = state.paletteGenerator?.dominantColor;
+    final primaryColor = dominantColor?.color;
 
     if (abilities == null || abilities.isEmpty) {
       return Container(
@@ -38,11 +40,14 @@ class PokemonAbilities extends StatelessWidget {
                 for (final ability in abilities)
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
                     ),
-                    child: Text(ability?.name.unhypenated.capitalized ?? ""),
+                    child: Text(
+                      ability?.name.unhypenated.capitalized ?? "",
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
               ],
             ),

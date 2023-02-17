@@ -14,6 +14,8 @@ class PokemonEncounters extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.select<PokemonCubit, PokemonState>((value) => value.state);
     final encounters = state.pokemonDetail?.encounters;
+    final dominantColor = state.paletteGenerator?.dominantColor;
+    final primaryColor = dominantColor?.color;
 
     if (encounters == null || encounters.isEmpty) {
       return Container(
@@ -40,9 +42,13 @@ class PokemonEncounters extends StatelessWidget {
                 child: InkWell(
                   onTap: () => context.push("/location-detail", extra: encounter),
                   child: Container(
+                    color: primaryColor,
                     width: double.infinity,
                     padding: const EdgeInsets.all(8),
-                    child: Text(encounter?.location?.name.unhypenated.capitalized ?? ""),
+                    child: Text(
+                      encounter?.location?.name.unhypenated.capitalized ?? "",
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
@@ -56,7 +62,7 @@ class PokemonEncounters extends StatelessWidget {
                   builder: (context) {
                     return PokemonEncountersDialog(
                       encounters: encounters,
-                      color: state.paletteGenerator?.dominantColor?.color,
+                      color: primaryColor,
                     );
                   },
                 ).then((encounter) {
@@ -65,13 +71,9 @@ class PokemonEncounters extends StatelessWidget {
                   });
                 });
               },
-              child: Text(
+              child: const Text(
                 "See more...",
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  color: state.paletteGenerator?.dominantColor?.bodyTextColor,
-                ),
+                style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
               ),
             ),
           ],

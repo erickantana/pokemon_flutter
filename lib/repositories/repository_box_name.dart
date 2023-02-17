@@ -7,5 +7,5 @@ class RepositoryBoxName {
 
 class MetadataBoxName {
   static const String name = "metadata";
-  static const String pokemonCount = "";
+  static const String pokemonCount = "pokemonCount";
 }

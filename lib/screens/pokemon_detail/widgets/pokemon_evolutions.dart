@@ -24,16 +24,21 @@ class PokemonEvolutions extends StatelessWidget {
       );
     }
 
-    return Column(
-      children: [
-        if (evolutionChains.isNotEmpty) ...[
-          for (final evolutionChain in evolutionChains)
-            BlocProvider(
-              create: (context) => PokemonEvolutionCubit(evolutionChain),
-              child: const PokemonEvolution(),
-            ),
-        ],
-      ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: Column(
+          children: [
+            if (evolutionChains.isNotEmpty) ...[
+              for (final evolutionChain in evolutionChains)
+                BlocProvider(
+                  create: (context) => PokemonEvolutionCubit(evolutionChain),
+                  child: const PokemonEvolution(),
+                ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

@@ -53,7 +53,7 @@ class PokemonsCubit extends Cubit<PokemonsState> {
         maps[cursor].putIfAbsent(pokemonEntry.key, () => pokemonEntry.value);
         cursor = (cursor + 1) % maps.length;
       }
-      emit(PokemonsState(firstList: state.firstList, secondList: state.secondList, thirdList: state.thirdList, count: pokemonCount));
+      if (!isClosed) emit(PokemonsState(firstList: state.firstList, secondList: state.secondList, thirdList: state.thirdList, count: pokemonCount));
     }
   }
 
