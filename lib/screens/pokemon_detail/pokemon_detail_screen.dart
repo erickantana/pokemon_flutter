@@ -10,6 +10,7 @@ import 'widgets/pokemon_encounters.dart';
 import 'widgets/pokemon_evolutions.dart';
 import 'widgets/pokemon_moves.dart';
 import 'widgets/pokemon_species.dart';
+import 'widgets/pokemon_sprites.dart';
 import 'widgets/pokemon_stats.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
@@ -34,7 +35,6 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final pokemonState = context.select<PokemonCubit, PokemonState>((value) => value.state);
-    final image = context.select<PokemonCubit, String?>((value) => value.image);
     final pokemonDetail = pokemonState.pokemonDetail;
 
     if (pokemonDetail == null) {
@@ -110,13 +110,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(top: 8)),
-                if (image != null)
-                  Image.network(image)
-                else
-                  const Text(
-                    "No Image Available",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, color: Colors.white),
-                  ),
+                const PokemonSprites(),
                 const Padding(padding: EdgeInsets.only(top: 8)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

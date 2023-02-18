@@ -53,6 +53,8 @@ class PokemonSpecies extends StatelessWidget {
               ),
               const Padding(padding: EdgeInsets.only(top: 8)),
               Wrap(
+                spacing: 4,
+                runSpacing: 4,
                 children: [
                   for (final variety in species.varieties ?? <String>[])
                     BlocProvider(

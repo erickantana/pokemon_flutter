@@ -105,16 +105,4 @@ class PokemonCubit extends Cubit<PokemonState> {
       parseEvolutionChain(evolutionMaps, evolveTo);
     }
   }
-
-  String? get image {
-    return state.pokemonDetail?.sprites?.frontDefault ??
-        state.pokemonDetail?.sprites?.backDefault ??
-        state.pokemonDetail?.sprites?.backFemale ??
-        state.pokemonDetail?.sprites?.backShiny ??
-        state.pokemonDetail?.sprites?.backShinyFemale ??
-        state.pokemonDetail?.sprites?.frontDefault ??
-        state.pokemonDetail?.sprites?.frontFemale ??
-        state.pokemonDetail?.sprites?.frontShiny ??
-        state.pokemonDetail?.sprites?.frontShinyFemale;
-  }
 }
