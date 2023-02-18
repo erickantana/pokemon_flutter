@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../extensions/localizations.dart';
+
 class ConfirmationDialog extends StatefulWidget {
   final String title;
   final String message;
@@ -32,14 +34,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       ),
       actions: [
         ElevatedButton(
-          child: const Text("Yes"),
+          child: Text(context.locale.yes),
           onPressed: () {
             widget.positiveAction?.call();
             if (mounted) Navigator.of(context).pop(true);
           },
         ),
         TextButton(
-          child: const Text("Cancel"),
+          child: Text(context.locale.cancel),
           onPressed: () {
             widget.negativeAction?.call();
             if (mounted) Navigator.of(context).pop(false);

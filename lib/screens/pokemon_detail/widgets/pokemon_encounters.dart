@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../extensions/string_extensions.dart';
 import '../../../podo/encounter.dart';
 import '../pokemon_cubit.dart';
@@ -22,9 +23,9 @@ class PokemonEncounters extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        child: const Text(
-          "No Encounters Available",
-          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        child: Text(
+          context.locale.noEncounterAvailable,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
       );
     }
@@ -71,9 +72,9 @@ class PokemonEncounters extends StatelessWidget {
                   });
                 });
               },
-              child: const Text(
-                "See more...",
-                style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+              child: Text(
+                "${context.locale.seeMore}...",
+                style: const TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
               ),
             ),
           ],

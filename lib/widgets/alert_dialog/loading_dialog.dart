@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../extensions/localizations.dart';
+
 class LoadingDialog<T> extends StatefulWidget {
   final Future<DialogResult<T>> Function() futureAction;
   final String message;
@@ -22,7 +24,7 @@ class _LoadingDialogState extends State<LoadingDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Loading"),
+      title: Text(context.locale.loading),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

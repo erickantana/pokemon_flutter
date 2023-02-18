@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../extensions/string_extensions.dart';
 import '../pokemon_cubit.dart';
 import 'pokemon_moves_dialog.dart';
@@ -20,9 +21,9 @@ class PokemonMoves extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        child: const Text(
-          "No Moves Available",
-          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        child: Text(
+          context.locale.noMoveAvailable,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
       );
     }
@@ -66,9 +67,9 @@ class PokemonMoves extends StatelessWidget {
                     },
                   );
                 },
-                child: const Text(
-                  "See more...",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+                child: Text(
+                  "${context.locale.seeMore}...",
+                  style: const TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../extensions/localizations.dart';
 import '../../extensions/string_extensions.dart';
 import '../../podo/encounter.dart';
 import '../../podo/encounter_detail.dart';
@@ -26,9 +27,9 @@ class LocationDetail extends StatelessWidget {
                   child: Icon(Icons.arrow_back),
                 ),
               ),
-              const Text(
-                "Back",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                context.locale.back,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -57,11 +58,11 @@ class LocationDetail extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Version: ${encounterVersion?.name.capitalized}",
+                                    "${context.locale.version}: ${encounterVersion?.name.capitalized}",
                                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    "Max Chance: ${encounterVersion?.maxChance?.toString() ?? ""}",
+                                    "${context.locale.maxChance}: ${encounterVersion?.maxChance?.toString() ?? ""}",
                                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -98,7 +99,7 @@ class LocationEncounterDetail extends StatelessWidget {
             if (i > 0) const Divider(),
             const Padding(padding: EdgeInsets.only(top: 8)),
             Text(
-              "Encounter #${i + 1}",
+              "${context.locale.encounter} #${i + 1}",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -109,13 +110,13 @@ class LocationEncounterDetail extends StatelessWidget {
               children: [
                 Expanded(
                   child: KeyValuePair(
-                    stringKey: "Min. Level",
+                    stringKey: context.locale.minLevel,
                     stringValue: encounters[i]?.minLevel?.toString(),
                   ),
                 ),
                 Expanded(
                   child: KeyValuePair(
-                    stringKey: "Chance",
+                    stringKey: context.locale.chance,
                     stringValue: encounters[i]?.chance?.toString(),
                   ),
                 ),
@@ -126,13 +127,13 @@ class LocationEncounterDetail extends StatelessWidget {
               children: [
                 Expanded(
                   child: KeyValuePair(
-                    stringKey: "Max. Level",
+                    stringKey: context.locale.maxLevel,
                     stringValue: encounters[i]?.maxLevel?.toString(),
                   ),
                 ),
                 Expanded(
                   child: KeyValuePair(
-                    stringKey: "Method",
+                    stringKey: context.locale.method,
                     stringValue: encounters[i]?.method.unhypenated.capitalized,
                   ),
                 ),
@@ -159,9 +160,9 @@ class EncounterConditions extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Conditions:",
-            style: TextStyle(
+          Text(
+            "${context.locale.condition}:",
+            style: const TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.bold,
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../extensions/localizations.dart';
 import '../pokemon_cubit.dart';
 import '../pokemon_evolution_cubit.dart';
 import 'pokemon_evolution.dart';
@@ -17,9 +18,9 @@ class PokemonEvolutions extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        child: const Text(
-          "No Evolutions Available",
-          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        child: Text(
+          context.locale.noEvolutionAvailable,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
       );
     }

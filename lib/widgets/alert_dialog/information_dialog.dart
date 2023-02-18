@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../extensions/localizations.dart';
+
 class InformationDialog extends StatelessWidget {
   final String title;
   final String message;
@@ -12,7 +14,7 @@ class InformationDialog extends StatelessWidget {
       content: Text(message),
       actions: [
         TextButton(
-          child: const Text("Close"),
+          child: Text(context.locale.close),
           onPressed: () {
             Navigator.of(context).pop();
           },

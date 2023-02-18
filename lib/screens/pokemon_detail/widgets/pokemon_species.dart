@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../podo/species.dart';
 import '../pokemon_cubit.dart';
 import '../pokemon_species_variety_cubit.dart';
@@ -20,9 +21,9 @@ class PokemonSpecies extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        child: const Text(
-          "Species Info is Unavailable",
-          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        child: Text(
+          context.locale.speciesInfoUnavailable,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
       );
     }
@@ -34,22 +35,22 @@ class PokemonSpecies extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Species Info",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            Text(
+              context.locale.speciesInfo,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const Padding(padding: EdgeInsets.only(top: 8)),
             Row(
               children: [
-                Expanded(child: SpeciesInfo(stringKey: "Base Happiness", stringValue: species.baseHappiness?.toString() ?? "")),
-                Expanded(child: SpeciesInfo(stringKey: "Capture Rate", stringValue: species.captureRate?.toString() ?? "")),
+                Expanded(child: SpeciesInfo(stringKey: context.locale.baseHappiness, stringValue: species.baseHappiness?.toString() ?? "")),
+                Expanded(child: SpeciesInfo(stringKey: context.locale.captureRate, stringValue: species.captureRate?.toString() ?? "")),
               ],
             ),
             const Padding(padding: EdgeInsets.only(top: 16)),
             if (varieties != null && varieties.isNotEmpty) ...[
-              const Text(
-                "Varieties",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              Text(
+                context.locale.varieties,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const Padding(padding: EdgeInsets.only(top: 8)),
               Wrap(

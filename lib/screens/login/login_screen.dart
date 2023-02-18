@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Text("Sign in to continue"),
+          Text(context.locale.signInToContinue),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,12 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Row(
             children: [
-              const Text("Don't have an account?"),
+              Text(context.locale.dontHaveAnAccount),
               InkWell(
                 onTap: () => context.push("/register"),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Register Instead", style: TextStyle(color: Colors.blue)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(context.locale.registerInstead, style: const TextStyle(color: Colors.blue)),
                 ),
               ),
             ],
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         showDialog(
           context: context,
-          builder: (context) => InformationDialog(title: "Authentication Status", message: dialogResult.message),
+          builder: (context) => InformationDialog(title: context.locale.authenticationStatus, message: dialogResult.message),
         );
       }
     });

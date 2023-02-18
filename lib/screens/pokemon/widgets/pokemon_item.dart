@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../extensions/string_extensions.dart';
 import '../../../podo/pokemon.dart';
 
@@ -72,11 +73,11 @@ class PokemonCard extends StatelessWidget {
                   pokemonImage,
                   height: 92,
                   errorBuilder: (context, error, stackTrace) {
-                    return Container(alignment: Alignment.center, height: 92, child: const Text("Unable to fetch image"));
+                    return Container(alignment: Alignment.center, height: 92, child: Text(context.locale.unableToFetchImage));
                   },
                 )
               else
-                Container(alignment: Alignment.center, height: 92, child: const Text("No Image Available")),
+                Container(alignment: Alignment.center, height: 92, child: Text(context.locale.noImageAvailable)),
               Text(
                 name.capitalized,
                 style: TextStyle(

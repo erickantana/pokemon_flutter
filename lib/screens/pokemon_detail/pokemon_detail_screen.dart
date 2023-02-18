@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../extensions/localizations.dart';
 import '../../extensions/string_extensions.dart';
 import '../../podo/pokemon_type.dart';
 import 'pokemon_cubit.dart';
@@ -24,7 +25,14 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
   static const initialPage = 0;
   final PageController _pageController = PageController(initialPage: initialPage);
   int activePage = initialPage;
-  final List<String> pages = ["Base Stats", "Encounters", "Moves", "Abilities", "Evolutions", "Species"];
+  late final List<String> pages = [
+    context.locale.baseStats,
+    context.locale.encounter,
+    context.locale.moves,
+    context.locale.abilities,
+    context.locale.evolutions,
+    context.locale.species,
+  ];
 
   @override
   void initState() {
@@ -47,7 +55,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
               children: [
                 InkWell(onTap: () => context.pop(), child: const Icon(Icons.arrow_back)),
                 const Padding(padding: EdgeInsets.only(left: 16)),
-                const Text("Back", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text(context.locale.back, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
             ),
           ],
@@ -117,7 +125,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                   children: [
                     Column(
                       children: [
-                        Text("Weight", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: secondaryColor)),
+                        Text(context.locale.weight, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: secondaryColor)),
                         const Padding(padding: EdgeInsets.only(top: 4)),
                         Text(
                           pokemonDetail.weight?.toString() ?? "",
@@ -127,7 +135,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                     ),
                     Column(
                       children: [
-                        Text("Height", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: secondaryColor)),
+                        Text(context.locale.height, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: secondaryColor)),
                         const Padding(padding: EdgeInsets.only(top: 4)),
                         Text(
                           pokemonDetail.height?.toString() ?? "",

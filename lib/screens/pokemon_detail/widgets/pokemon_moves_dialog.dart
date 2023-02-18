@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../extensions/string_extensions.dart';
 import '../../../podo/move.dart';
 
@@ -11,11 +12,11 @@ class PokemonMovesDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Padding(
-        padding: EdgeInsets.all(16),
+      title: Padding(
+        padding: const EdgeInsets.all(16),
         child: Text(
-          "Moves",
-          style: TextStyle(
+          context.locale.moves,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontStyle: FontStyle.italic,
             fontSize: 18,
@@ -55,7 +56,7 @@ class PokemonMovesDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          child: const Text("Close"),
+          child: Text(context.locale.close),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],

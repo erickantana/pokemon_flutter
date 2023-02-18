@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../extensions/string_extensions.dart';
 import '../../../podo/stat.dart';
 import '../pokemon_cubit.dart';
@@ -16,9 +17,9 @@ class PokemonStats extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        child: const Text(
-          "No Stats Available",
-          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        child: Text(
+          context.locale.noStatsAvailable,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
         ),
       );
     }

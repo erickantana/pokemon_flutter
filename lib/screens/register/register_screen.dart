@@ -72,12 +72,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Row(
             children: [
-              const Text("Already have an account?"),
+              Text(context.locale.alreadyHaveAnAccount),
               InkWell(
                 onTap: () => context.pop(),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Login Instead", style: TextStyle(color: Colors.blue)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(context.locale.loginInstead, style: const TextStyle(color: Colors.blue)),
                 ),
               ),
             ],
@@ -125,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       } else {
         showDialog(
           context: context,
-          builder: (context) => InformationDialog(title: "Authentication Status", message: dialogResult.message),
+          builder: (context) => InformationDialog(title: context.locale.authenticationStatus, message: dialogResult.message),
         );
       }
     });

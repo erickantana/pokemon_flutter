@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../extensions/localizations.dart';
 import '../../../extensions/string_extensions.dart';
 import '../../../podo/encounter.dart';
 
@@ -12,11 +13,11 @@ class PokemonEncountersDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Padding(
-        padding: EdgeInsets.all(16),
+      title: Padding(
+        padding: const EdgeInsets.all(16),
         child: Text(
-          "Encounters",
-          style: TextStyle(
+          context.locale.encounter,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontStyle: FontStyle.italic,
             fontSize: 18,
@@ -66,7 +67,7 @@ class PokemonEncountersDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          child: const Text("Close"),
+          child: Text(context.locale.close),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],
