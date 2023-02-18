@@ -23,7 +23,6 @@ import 'podo/species.dart';
 import 'podo/sprite.dart';
 import 'podo/stat.dart';
 import 'state_management/auth_cubit.dart';
-import 'state_management/prefs_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,13 +48,7 @@ void main() async {
   Hive.registerAdapter(EvolutionDetailAdapter());
   Hive.registerAdapter(SpeciesAdapter());
 
-  runApp(
-    BlocProvider(
-      create: (context) => PrefsCubit(),
-      lazy: false,
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -72,18 +65,13 @@ class MyApp extends StatelessWidget {
               final user = FirebaseAuth.instance.currentUser;
               return AuthCubit(user);
             },
-            child: StreamBuilder(
-              stream: context.read<PrefsCubit>().stream,
-              builder: (context, snapshot) {
-                return MaterialApp.router(
-                  localizationsDelegates: AppLocalizations.localizationsDelegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  routerConfig: routes,
-                  themeMode: (snapshot.data?.darkMode ?? false) ? ThemeMode.dark : ThemeMode.light,
-                  darkTheme: ThemeData.dark(useMaterial3: true),
-                  theme: ThemeData.light(useMaterial3: true),
-                );
-              },
+            child: MaterialApp.router(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: routes,
+              themeMode: ThemeMode.system,
+              darkTheme: ThemeData.dark(useMaterial3: true),
+              theme: ThemeData.light(useMaterial3: true),
             ),
           );
         }

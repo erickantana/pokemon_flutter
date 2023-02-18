@@ -52,7 +52,6 @@ dependencies:
   palette_generator: ^0.3.3+2
   collection: ^1.16.0
   linked_scroll_controller: ^0.2.0
-  shared_preferences: ^2.0.17
 
 dev_dependencies:
   flutter_test:

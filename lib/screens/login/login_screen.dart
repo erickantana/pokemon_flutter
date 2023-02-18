@@ -23,32 +23,64 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(32),
-      width: double.infinity,
-      color: Colors.white,
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          OutlinedTextField(
-            title: context.locale.email,
-            controller: emailController,
-            hintText: context.locale.emailAddress,
+          const Padding(padding: EdgeInsets.only(top: 32)),
+          const Text(
+            "Pokedex",
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 16)),
-          OutlinedTextField(
-            title: context.locale.password,
-            controller: passwordController,
-            obscureText: true,
-            hintText: context.locale.password,
+          const Text("Sign in to continue"),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                OutlinedTextField(
+                  title: context.locale.email,
+                  controller: emailController,
+                  hintText: context.locale.emailAddress,
+                ),
+                const Padding(padding: EdgeInsets.only(top: 16)),
+                OutlinedTextField(
+                  title: context.locale.password,
+                  controller: passwordController,
+                  obscureText: true,
+                  hintText: context.locale.password,
+                ),
+                const Padding(padding: EdgeInsets.only(top: 16)),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    onTap: login,
+                    child: Text(
+                      context.locale.signIn,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 16)),
-          InkWell(
-            onTap: () => context.push("/register"),
-            child: Text(context.locale.register, style: const TextStyle(color: Colors.blue)),
-          ),
-          ElevatedButton(
-            onPressed: login,
-            child: Text(context.locale.signIn),
+          Row(
+            children: [
+              const Text("Don't have an account?"),
+              InkWell(
+                onTap: () => context.push("/register"),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Register Instead", style: TextStyle(color: Colors.blue)),
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import '../../podo/pokemon.dart';
-import '../../state_management/prefs_cubit.dart';
 import 'pokemons_cubit.dart';
 import 'widgets/pokemon_item.dart';
 
@@ -38,24 +37,6 @@ class _PokemonScreenState extends State<PokemonScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StreamBuilder(
-          stream: context.read<PrefsCubit>().stream,
-          builder: (context, snapshot) {
-            return Row(
-              children: [
-                Switch(
-                  value: snapshot.data?.darkMode ?? false,
-                  onChanged: (bool? value) {
-                    if (value != null) {
-                      context.read<PrefsCubit>().setDarkMode(value);
-                    }
-                  },
-                ),
-                const Text("Use Dark Theme", style: TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            );
-          },
-        ),
         BlocSelector<PokemonsCubit, PokemonsState, PokemonsState>(
           selector: (state) => state,
           builder: (context, state) {
