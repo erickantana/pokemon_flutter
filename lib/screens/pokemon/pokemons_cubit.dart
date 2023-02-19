@@ -6,26 +6,22 @@ import '../../repositories/pokemon_repository.dart';
 import '../../schemas/schema.graphql.dart';
 
 class PokemonsState {
-  Map<int, Pokemon> firstList;
-  Map<int, Pokemon> secondList;
-  Map<int, Pokemon> thirdList;
+  Map<int, Pokemon> pokemons;
   int? count;
 
-  PokemonsState({required this.firstList, required this.secondList, required this.thirdList, this.count});
+  PokemonsState({required this.pokemons, this.count});
 }
 
 class PokemonsCubit extends Cubit<PokemonsState> {
-  PokemonsCubit() : super(PokemonsState(firstList: {}, secondList: {}, thirdList: {}));
+  PokemonsCubit() : super(PokemonsState(pokemons: {}));
 
   bool _isFetching = false;
-
-  int get _pokemonLength => state.firstList.length + state.secondList.length + state.thirdList.length;
 
   Future<void> fetchPokemon(int limit) async {
     if (_isFetching) return;
     _isFetching = true;
 
-    int offset = _pokemonLength;
+    int offset = state.pokemons.length;
     await _fetchLocal(limit: limit, offset: offset);
     _fetchRemote(limit: limit, offset: offset);
 
@@ -34,26 +30,12 @@ class PokemonsCubit extends Cubit<PokemonsState> {
 
   Future<void> _fetchLocal({required int limit, required int offset}) async {
     final pokemonCount = await PokemonRepository.getPokemonCount();
-    if (pokemonCount != null && _pokemonLength >= pokemonCount) return;
+    if (pokemonCount != null && state.pokemons.length >= pokemonCount) return;
 
     final pokemons = await PokemonRepository.getPokemons(limit: limit, offset: offset);
 
-    List<Map<int, Pokemon>> maps = [state.firstList, state.secondList, state.thirdList];
-    final mapLeastCount = maps.reduce((value, element) => value.length <= element.length ? value : element);
-    int cursor = maps.indexOf(mapLeastCount);
-    if (pokemons.isNotEmpty) {
-      pokemonEntries:
-      for (var pokemonEntry in pokemons.entries) {
-        for (final map in maps) {
-          if (map.containsKey(pokemonEntry.key)) {
-            map[pokemonEntry.key] = pokemonEntry.value;
-            continue pokemonEntries;
-          }
-        }
-        maps[cursor].putIfAbsent(pokemonEntry.key, () => pokemonEntry.value);
-        cursor = (cursor + 1) % maps.length;
-      }
-      if (!isClosed) emit(PokemonsState(firstList: state.firstList, secondList: state.secondList, thirdList: state.thirdList, count: pokemonCount));
+    if (pokemons.isNotEmpty && !isClosed) {
+      emit(PokemonsState(pokemons: {...state.pokemons, ...pokemons}, count: pokemonCount));
     }
   }
 

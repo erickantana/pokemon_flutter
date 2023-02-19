@@ -56,7 +56,7 @@ class PokemonCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.all(8),
-          child: Column(
+          child: Stack(
             children: [
               Align(
                 alignment: Alignment.topLeft,
@@ -64,26 +64,34 @@ class PokemonCard extends StatelessWidget {
                   "#$id",
                   style: TextStyle(
                     color: paletteGenerator?.dominantColor?.bodyTextColor,
+                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
               if (pokemonImage != null)
-                Image.network(
-                  pokemonImage,
-                  height: 92,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(alignment: Alignment.center, height: 92, child: Text(context.locale.unableToFetchImage));
-                  },
+                Align(
+                  alignment: Alignment.center,
+                  child: Image.network(
+                    pokemonImage,
+                    height: 92,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(alignment: Alignment.center, height: 92, child: Text(context.locale.unableToFetchImage));
+                    },
+                  ),
                 )
               else
                 Container(alignment: Alignment.center, height: 92, child: Text(context.locale.noImageAvailable)),
-              Text(
-                name.capitalized,
-                style: TextStyle(
-                  color: paletteGenerator?.dominantColor?.bodyTextColor,
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Text(
+                  name.capitalized,
+                  style: TextStyle(
+                    color: paletteGenerator?.dominantColor?.bodyTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.right,
                 ),
-                textAlign: TextAlign.center,
               ),
             ],
           ),

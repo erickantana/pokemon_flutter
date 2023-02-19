@@ -48,7 +48,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
     if (pokemonDetail == null) {
       return Container(
         padding: const EdgeInsets.all(16),
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           children: [
             Row(
